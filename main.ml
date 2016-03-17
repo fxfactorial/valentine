@@ -43,7 +43,8 @@ let top_level_info =
      `P "$(b,$(tname)) is a statically linked binary that \
          validates your HTML against the offical W3C HTML spec \
          giving you the file name, line number, column number, \
-         offending tag and issue.";
+         offending tag and issue. If there's an error \
+         then $(b,$(tname)) exits with code 1.";
      `S "MISC";
      `P "This program is written in the OCaml programming \
          language and uses Markup.ml.";
