@@ -1,0 +1,4 @@
+B _build
+S .
+PKG cmdliner markup
+FLG -w +a-4-40..42-44-45-48
