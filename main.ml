@@ -3,9 +3,8 @@ open Cmdliner
 
 let did_error = ref false
 
-let oops msg =
-  print_endline "You have a mistake in your HTML";
-  Printf.sprintf "\027[31m%s\027[m" msg
+let oops msg ~html_file =
+  Printf.sprintf "\027[36mFile:%s\027[m \027[31m%s\027[m" html_file msg
   |> print_endline
 
 let html_files =
@@ -20,7 +19,7 @@ let do_parse html_file =
     |> parse_html
       ~report:(fun location e ->
           did_error := true;
-          Markup.Error.to_string ~location e |> oops)
+          Markup.Error.to_string ~location e |> oops ~html_file)
     |> signals
     |> write_html
     |> to_string
@@ -39,8 +38,19 @@ let entry_point =
 
 let top_level_info =
   let doc = "Validate your HTML according to HTML spec" in
-  let man = [`S "DESCRIPTION"] in
-  Term.info ~version:"0.9.0" ~doc ~man "valentine"
+  let man =
+    [`S "DESCRIPTION";
+     `P "$(b,$(tname)) is a statically linked binary that \
+         validates your HTML against the offical W3C HTML spec \
+         giving you the file name, line number, column number, \
+         offending tag and issue.";
+     `S "MISC";
+     `P "This program is written in the OCaml programming \
+         language and uses Markup.ml.";
+     `S "AUTHOR";
+     `P "Edgar Aroutiounian"]
+  in
+  Term.info ~version:"1.0.0" ~doc ~man "valentine"
 
 let () =
   Term.eval (entry_point, top_level_info)
