@@ -17,13 +17,13 @@ let do_validate html_file =
     |> fun (stream, closer) ->
     stream
     |> parse_html
+      ~context:`Document
       ~report:(fun location e ->
           did_error := true;
           Error.to_string ~location e |> oops ~html_file)
     |> signals
-    |> write_html
-    |> to_string
-    |> fun _ -> closer ()
+    |> drain
+    |> fun () -> closer ()
   )
 
 let begin_program html_files =
