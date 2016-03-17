@@ -2,8 +2,9 @@ valentine
 ===========
 
 **valentine** is a statically linked binary that validates your HTML
-against the offical W3C HTML section 8 spec giving you the file name,
-line number, column number, offending tag and issue.
+against the offical W3C HTML spec. Syntax is checked, but only some of
+the semantic properties. In case of error, valentine gives you the file
+name, line number, column number, offending text, and issue.
 
 Install it with `opam`, the OCaml package manager, with 
 
