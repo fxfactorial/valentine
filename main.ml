@@ -11,7 +11,7 @@ let html_files =
   let doc = "List of html files to validate" in
   Arg.(non_empty & pos_all file [] & info [] ~docv:"HTML file(s)" ~doc)
 
-let do_parse html_file =
+let do_validate html_file =
   Markup.(
     file html_file
     |> fun (stream, closer) ->
@@ -28,7 +28,7 @@ let do_parse html_file =
 
 let begin_program
     html_files =
-  html_files |> List.iter ~f:do_parse;
+  html_files |> List.iter ~f:do_validate;
   exit (if !did_error then 1 else 0)
 
 let entry_point =
