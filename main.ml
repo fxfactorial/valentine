@@ -1,6 +1,8 @@
 open StdLabels
 open Cmdliner
 
+let did_error = ref false
+
 let oops msg =
   print_endline "You have a mistake in your HTML";
   Printf.sprintf "\027[31m%s\027[m" msg
@@ -16,7 +18,9 @@ let do_parse html_file =
     |> fun (stream, closer) ->
     stream
     |> parse_html
-      ~report:(fun location e -> Markup.Error.to_string ~location e |> oops)
+      ~report:(fun location e ->
+          did_error := true;
+          Markup.Error.to_string ~location e |> oops)
     |> signals
     |> write_html
     |> to_string
@@ -25,7 +29,8 @@ let do_parse html_file =
 
 let begin_program
     html_files =
-  html_files |> List.iter ~f:do_parse
+  html_files |> List.iter ~f:do_parse;
+  exit (if !did_error then 1 else 0)
 
 let entry_point =
   Term.(pure
