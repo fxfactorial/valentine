@@ -19,22 +19,18 @@ let do_validate html_file =
     |> parse_html
       ~report:(fun location e ->
           did_error := true;
-          Markup.Error.to_string ~location e |> oops ~html_file)
+          Error.to_string ~location e |> oops ~html_file)
     |> signals
     |> write_html
     |> to_string
     |> fun _ -> closer ()
   )
 
-let begin_program
-    html_files =
+let begin_program html_files =
   html_files |> List.iter ~f:do_validate;
   exit (if !did_error then 1 else 0)
 
-let entry_point =
-  Term.(pure
-          begin_program
-       $ html_files)
+let entry_point = Term.(pure begin_program $ html_files)
 
 let top_level_info =
   let doc = "Validate your HTML according to HTML spec" in
@@ -53,6 +49,4 @@ let top_level_info =
   in
   Term.info ~version:"1.0.0" ~doc ~man "valentine"
 
-let () =
-  Term.eval (entry_point, top_level_info)
-  |> ignore
+let () = Term.eval (entry_point, top_level_info) |> ignore
