@@ -2,8 +2,8 @@ valentine
 ===========
 
 **valentine** is a statically linked binary that validates your HTML
-against the offical W3C HTML spec giving you the file name, line
-number, column number, offending tag and issue.
+against the offical W3C HTML section 8 spec giving you the file name,
+line number, column number, offending tag and issue.
 
 Install it with `opam`, the OCaml package manager, with 
 
@@ -24,3 +24,10 @@ File:test.html line 4, column 10: unmatched start tag 'em'
 File:test.html line 5, column 14: bad token '>' in tag: expected attribute value after '='
 File:test.html line 4, column 10: unmatched start tag 'em'
 ```
+
+Acknowledgements
+====================
+
+Thank you to @aantron for making
+[Markup.ml](https://github.com/aantron/markup.ml), we were sorely
+needing it.
