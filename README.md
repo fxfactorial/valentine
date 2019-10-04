@@ -19,7 +19,7 @@ Example output
 =================
 
 ```shell
-$ valentine test.html
+$ valentine ex/test.html
 File:test.html line 4, column 1: misnested tag: 'body' in 'body'
 File:test.html line 4, column 10: unmatched start tag 'em'
 File:test.html line 5, column 14: bad token '>' in tag: expected attribute value after '='
